@@ -32,27 +32,27 @@ jobs:
           RELEASE_PLEASE_OUTPUT: ${{ toJSON(steps.release.outputs) }}
         run: echo "${RELEASE_PLEASE_OUTPUT}" | jq
 
-    upload-archive:
-        if: needs.release-please.outputs.release_created
-        runs-on: builder
-        needs:
-            -release-please
+  upload-archive:
+      if: needs.release-please.outputs.release_created
+      runs-on: builder
+      needs:
+          -release-please
 
-        permissions:
-            contents: write
+      permissions:
+          contents: write
 
-        steps:
-          - name: Checkout repository
-            uses: actions/checkout@v4
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
 
-          - name: Build archive
-            run: tar -czf module.tar.gz README.md
+        - name: Build archive
+          run: tar -czf module.tar.gz README.md
 
-          - name: Upload archive
-            uses: softprops/action-gh-release@v1
-            with:
-              files: |
-                ./module.tar.gz
+        - name: Upload archive
+          uses: softprops/action-gh-release@v1
+          with:
+            files: |
+              ./module.tar.gz
 
   #bump-version:
   #  if: needs.release-please.outputs.pr != null
