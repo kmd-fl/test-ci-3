@@ -36,7 +36,7 @@ jobs:
       if: needs.release-please.outputs.release_created
       runs-on: builder
       needs:
-          -release-please
+          - release-please
 
       permissions:
           contents: write
