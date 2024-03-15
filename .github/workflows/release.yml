@@ -15,7 +15,7 @@ jobs:
     outputs:
       version: ${{ steps.release.outputs['version'] }}
       pr: ${{ steps.release.outputs['pr'] }}
-      releases_created: ${{ steps.release.outputs['releases_created'] }}
+      release_created: ${{ steps.release.outputs['release_created'] }}
 
     steps:
       - name: Release with release-please
@@ -31,6 +31,28 @@ jobs:
         env:
           RELEASE_PLEASE_OUTPUT: ${{ toJSON(steps.release.outputs) }}
         run: echo "${RELEASE_PLEASE_OUTPUT}" | jq
+
+	upload-archive:
+    	if: needs.release-please.outputs.release_created
+    	runs-on: builder
+    	needs:
+        	-release-please
+
+        permissions:
+            contents: write
+
+		steps:
+          - name: Checkout repository
+            uses: actions/checkout@v4
+
+          - name: Build archive
+            run: tar -czf module.tar.gz README.md
+
+          - name: Upload archive
+            uses: softprops/action-gh-release@v1
+            with:
+              files: |
+                ./module.tar.gz
 
   #bump-version:
   #  if: needs.release-please.outputs.pr != null
