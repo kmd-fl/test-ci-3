@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/kmd-fl/test-ci-3/compare/test-ci-v1.3.0...test-ci-v1.4.0) (2024-03-18)
+
+
+### Features
+
+* update readme ([bec446a](https://github.com/kmd-fl/test-ci-3/commit/bec446ab4439e8e6b86a000d78e30b51c0af5212))
+
 ## [1.3.0](https://github.com/kmd-fl/test-ci-3/compare/test-ci-v1.2.0...test-ci-v1.3.0) (2024-03-18)
 
 
